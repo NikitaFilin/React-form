@@ -1,7 +1,7 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 
-import { Form } from "./Components/Form";
+import { Form } from "./Components/Form/Form";
 
 const GlobalStyle = createGlobalStyle`
 *,
@@ -12,8 +12,6 @@ const GlobalStyle = createGlobalStyle`
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
 }
-
-::-webkit-datetime { background: silver; }
 `;
 
 function App() {

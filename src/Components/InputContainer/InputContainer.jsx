@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input } from "./Input/Input";
+import { Input } from "./Input";
 
 import {
   InputWrapper,
@@ -37,7 +37,6 @@ export const InputContainer = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    let formIsValid = true;
 
     for (let key in inputs) {
       switch (key) {
@@ -45,23 +44,27 @@ export const InputContainer = () => {
         case "firstName":
           if (inputs[key] === "") {
             newErrors[key] = "Поле является обязательным";
-            formIsValid = false;
           }
           break;
         case "email":
-          if (validateEmail(inputs[key]) === false) {
+          if (inputs[key] === "") {
+            newErrors[key] = "Поле является обязательным";
+          } else if (validateEmail(inputs[key]) === false) {
             newErrors[key] = "Введен некорректный адрес почты";
-            formIsValid = false;
           }
           break;
 
         case "phone":
-          if (validatePhone(inputs[key]) === false) {
+          if (inputs[key] === "") {
+            newErrors[key] = "Поле является обязательным";
+          } else if (validatePhone(inputs[key]) === false) {
             newErrors[key] = "Введен некорректный номер";
-            formIsValid = false;
           }
           break;
         case "birthday":
+          if (inputs[key] === "") {
+            newErrors[key] = "Поле является обязательным";
+          }
           break;
 
         default:
@@ -69,12 +72,14 @@ export const InputContainer = () => {
       }
     }
     setErrors(newErrors);
-    return formIsValid;
+
+    if (Object.keys(newErrors).length === 0) {
+      alert("Форма валидна, отправляется запрос");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     validateForm();
     return;
   };
@@ -83,19 +88,19 @@ export const InputContainer = () => {
     const {
       target: { value, name },
     } = e;
-    console.log(value, name, e);
     setInputs((prev) => {
       prev[name] = value;
       return prev;
     });
   };
+
   return (
     <Form onSubmit={(e) => handleSubmit(e)}>
       <InputWrapper>
         <Input
           name="lastName"
           type="text"
-          placeholder="Фамилия"
+          placeholder="Фамилия*"
           onChange={handleChange}
           error={errors.lastName}
         />
@@ -105,7 +110,7 @@ export const InputContainer = () => {
         <Input
           name="firstName"
           type="text"
-          placeholder="Имя"
+          placeholder="Имя*"
           onChange={handleChange}
           error={errors.firstName}
         />
@@ -131,10 +136,11 @@ export const InputContainer = () => {
           <Input
             name="birthday"
             type="date"
-            placeholder="Дата рождения"
+            placeholder="Дата рождения*"
             onChange={handleChange}
             error={errors.birthday}
           />
+          <ErrorMessage>{errors.birthday}</ErrorMessage>
         </InputWrapperLine>
       </InputWrapper>
 
@@ -143,7 +149,7 @@ export const InputContainer = () => {
           <Input
             name="phone"
             type="phone"
-            placeholder="Мобильный телефон"
+            placeholder="Мобильный телефон*"
             onChange={handleChange}
             error={errors.phone}
           />
@@ -153,7 +159,7 @@ export const InputContainer = () => {
           <Input
             name="email"
             type="text"
-            placeholder="Email (необязательно)"
+            placeholder="Email*"
             onChange={handleChange}
             error={errors.email}
           />
