@@ -4,22 +4,19 @@ import styled from "styled-components";
 import { InputContainer } from "./InputContainer";
 
 const Wrapper = styled.div`
-  width: 80%;
+  max-width: 65%;
   height: 100vh;
   margin: 0 auto;
   padding: 20px 0;
 
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
-  /* background-color: orange; */
 `;
 
 const FormContainer = styled.div`
-  min-width: 50%;
-  height: 80%;
-  /* background-color: pink; */
+  width: 65%;
 `;
 
 const Header = styled.h2`
@@ -32,7 +29,6 @@ export const Form = () => {
       <FormContainer>
         <Header>Информация о сотруднике</Header>
         <InputContainer></InputContainer>
-        {/* <Button></Button> */}
       </FormContainer>
     </Wrapper>
   );
